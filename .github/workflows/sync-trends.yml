@@ -1,0 +1,62 @@
+name: Sync fashion trends to Supabase
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "data/*.json"
+  workflow_dispatch: {}
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    env:
+      SUPABASE_URL: https://vomkpbmknkpepyijeypv.supabase.co
+      SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Sync data/*.json into Supabase (skip duplicates)
+        run: |
+          set -e
+          shopt -s nullglob
+          files=(data/*.json)
+          if [ ${#files[@]} -eq 0 ]; then
+            echo "No data files found, nothing to sync."
+            exit 0
+          fi
+
+          for file in "${files[@]}"; do
+            detected_date=$(basename "$file" .json)
+            echo "=== Processing $file (date=$detected_date) ==="
+
+            existing=$(curl -s "$SUPABASE_URL/rest/v1/fashion_trends?detected_date=eq.$detected_date&select=icon_name" \
+              -H "apikey: $SUPABASE_SERVICE_ROLE_KEY" \
+              -H "Authorization: Bearer $SUPABASE_SERVICE_ROLE_KEY" \
+              | jq -r '.[].icon_name')
+
+            jq -c '.[]' "$file" | while IFS= read -r entry; do
+              icon_name=$(echo "$entry" | jq -r '.icon_name')
+
+              if printf '%s\n' "$existing" | grep -qFx "$icon_name"; then
+                echo "Skipping duplicate: $icon_name"
+                continue
+              fi
+
+              payload=$(echo "$entry" | jq --arg d "$detected_date" '. + {detected_date: $d}')
+
+              status=$(curl -s -o /tmp/resp.json -w "%{http_code}" -X POST "$SUPABASE_URL/rest/v1/fashion_trends" \
+                -H "apikey: $SUPABASE_SERVICE_ROLE_KEY" \
+                -H "Authorization: Bearer $SUPABASE_SERVICE_ROLE_KEY" \
+                -H "Content-Type: application/json" \
+                -H "Prefer: return=minimal" \
+                -d "$payload")
+
+              if [ "$status" -ge 200 ] && [ "$status" -lt 300 ]; then
+                echo "Inserted: $icon_name"
+              else
+                echo "FAILED ($status) to insert: $icon_name"
+                cat /tmp/resp.json
+              fi
+            done
+          done
