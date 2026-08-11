@@ -1,0 +1,335 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Doris — Fashion Trends Tracker</title>
+<style>
+  :root {
+    --bg: #0e0d10;
+    --bg-elevated: #17151a;
+    --card: #1c1a20;
+    --card-border: #2b2831;
+    --text: #f4f1ee;
+    --text-dim: #a49fae;
+    --accent: #e6b1c4;
+    --accent-strong: #f2c9d6;
+    --pill-bg: #2a2230;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap {
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 40px 24px 80px;
+  }
+  header.page {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 32px;
+    border-bottom: 1px solid var(--card-border);
+    padding-bottom: 24px;
+  }
+  .eyebrow {
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 600;
+  }
+  h1 {
+    font-size: 30px;
+    margin: 0;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+  .subtitle {
+    color: var(--text-dim);
+    font-size: 14px;
+    margin-top: 4px;
+  }
+  .controls {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 28px 0 24px;
+    flex-wrap: wrap;
+  }
+  .day-nav {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  button.nav-btn {
+    background: var(--bg-elevated);
+    border: 1px solid var(--card-border);
+    color: var(--text);
+    border-radius: 8px;
+    width: 34px;
+    height: 34px;
+    cursor: pointer;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: border-color 0.15s ease;
+  }
+  button.nav-btn:hover:not(:disabled) { border-color: var(--accent); }
+  button.nav-btn:disabled { opacity: 0.35; cursor: default; }
+  select#daySelect {
+    background: var(--bg-elevated);
+    border: 1px solid var(--card-border);
+    color: var(--text);
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 14px;
+    min-width: 220px;
+  }
+  .count-badge {
+    color: var(--text-dim);
+    font-size: 13px;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+  }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    border-radius: 14px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  .icon-name {
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1.25;
+  }
+  .pill {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    background: var(--pill-bg);
+    color: var(--accent-strong);
+    padding: 4px 9px;
+    border-radius: 999px;
+    white-space: nowrap;
+    font-weight: 600;
+  }
+  .reason {
+    color: var(--text-dim);
+    font-size: 14px;
+    line-height: 1.5;
+  }
+  .card-footer {
+    margin-top: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 8px;
+    border-top: 1px solid var(--card-border);
+  }
+  .region {
+    font-size: 12px;
+    color: var(--text-dim);
+  }
+  a.source-link {
+    font-size: 12px;
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 600;
+  }
+  a.source-link:hover { text-decoration: underline; }
+  .state {
+    color: var(--text-dim);
+    padding: 60px 0;
+    text-align: center;
+    font-size: 14px;
+  }
+  .state.error { color: #e69b9b; }
+  footer.page {
+    margin-top: 56px;
+    color: var(--text-dim);
+    font-size: 12px;
+    text-align: center;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="page">
+    <span class="eyebrow">Doris · Social Media</span>
+    <h1>Fashion Trends Tracker</h1>
+    <p class="subtitle">Ícones e tendências de moda em alta globalmente, atualizado todo dia.</p>
+  </header>
+
+  <div class="controls">
+    <div class="day-nav">
+      <button class="nav-btn" id="prevBtn" title="Dia anterior">‹</button>
+      <select id="daySelect"></select>
+      <button class="nav-btn" id="nextBtn" title="Próximo dia">›</button>
+    </div>
+    <span class="count-badge" id="countBadge"></span>
+  </div>
+
+  <div id="content">
+    <div class="state" id="stateMsg">Carregando tendências…</div>
+    <div class="grid" id="grid" style="display:none;"></div>
+  </div>
+
+  <footer class="page">
+    Powered by Claude Code + Supabase — atualizado automaticamente todos os dias.
+  </footer>
+</div>
+
+<script type="module">
+  import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+
+  const SUPABASE_URL = 'https://vomkpbmknkpepyijeypv.supabase.co';
+  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZvbWtwYm1rbmtwZXB5aWpleXB2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODY0NzM4ODUsImV4cCI6MjEwMjA0OTg4NX0.cgbNVMY4mdFCNtPlBuMtmOudrzx1i5E2gfK2YFUWl9Y';
+
+  const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+  const daySelect = document.getElementById('daySelect');
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const grid = document.getElementById('grid');
+  const stateMsg = document.getElementById('stateMsg');
+  const countBadge = document.getElementById('countBadge');
+
+  const CATEGORY_LABEL = {
+    'red carpet': 'Red Carpet',
+    'streetwear': 'Streetwear',
+    'campanha': 'Campanha',
+    'editorial': 'Editorial',
+    'it-girl': 'It-Girl',
+  };
+
+  function formatDateLabel(dateStr) {
+    const [y, m, d] = dateStr.split('-').map(Number);
+    const date = new Date(y, m - 1, d);
+    return date.toLocaleDateString('pt-BR', { weekday: 'long', day: '2-digit', month: 'long', year: 'numeric' });
+  }
+
+  function renderDay(entriesByDate, dates, selectedDate) {
+    const entries = entriesByDate.get(selectedDate) || [];
+    countBadge.textContent = entries.length === 1 ? '1 tendência' : `${entries.length} tendências`;
+
+    grid.innerHTML = '';
+    if (entries.length === 0) {
+      stateMsg.textContent = 'Nenhuma tendência registrada para esse dia.';
+      stateMsg.style.display = 'block';
+      grid.style.display = 'none';
+      return;
+    }
+    stateMsg.style.display = 'none';
+    grid.style.display = 'grid';
+
+    for (const entry of entries) {
+      const card = document.createElement('div');
+      card.className = 'card';
+
+      const catLabel = CATEGORY_LABEL[(entry.category || '').toLowerCase()] || entry.category || '—';
+
+      card.innerHTML = `
+        <div class="card-top">
+          <div class="icon-name">${escapeHtml(entry.icon_name || 'Sem nome')}</div>
+          <span class="pill">${escapeHtml(catLabel)}</span>
+        </div>
+        <div class="reason">${escapeHtml(entry.reason || '')}</div>
+        <div class="card-footer">
+          <span class="region">${entry.region ? escapeHtml(entry.region) : ''}</span>
+          ${entry.source_url ? `<a class="source-link" href="${escapeAttr(entry.source_url)}" target="_blank" rel="noopener noreferrer">Ver fonte →</a>` : ''}
+        </div>
+      `;
+      grid.appendChild(card);
+    }
+  }
+
+  function escapeHtml(str) {
+    const div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+  }
+  function escapeAttr(str) {
+    return String(str).replace(/"/g, '&quot;');
+  }
+
+  async function init() {
+    const { data, error } = await supabase
+      .from('fashion_trends')
+      .select('*')
+      .order('detected_date', { ascending: false })
+      .order('created_at', { ascending: false });
+
+    if (error) {
+      stateMsg.textContent = 'Não foi possível carregar os dados agora. Tente recarregar a página em instantes.';
+      stateMsg.classList.add('error');
+      stateMsg.style.display = 'block';
+      grid.style.display = 'none';
+      console.error(error);
+      return;
+    }
+
+    if (!data || data.length === 0) {
+      stateMsg.textContent = 'Ainda não há tendências registradas. Volte em breve.';
+      stateMsg.style.display = 'block';
+      grid.style.display = 'none';
+      return;
+    }
+
+    const entriesByDate = new Map();
+    for (const row of data) {
+      if (!entriesByDate.has(row.detected_date)) entriesByDate.set(row.detected_date, []);
+      entriesByDate.get(row.detected_date).push(row);
+    }
+    const dates = Array.from(entriesByDate.keys()).sort((a, b) => b.localeCompare(a));
+
+    daySelect.innerHTML = dates.map(d => `<option value="${d}">${formatDateLabel(d)}</option>`).join('');
+
+    let currentIndex = 0;
+
+    function updateNavButtons() {
+      prevBtn.disabled = currentIndex >= dates.length - 1;
+      nextBtn.disabled = currentIndex <= 0;
+    }
+
+    function selectIndex(idx) {
+      currentIndex = idx;
+      daySelect.value = dates[currentIndex];
+      renderDay(entriesByDate, dates, dates[currentIndex]);
+      updateNavButtons();
+    }
+
+    daySelect.addEventListener('change', () => {
+      currentIndex = dates.indexOf(daySelect.value);
+      renderDay(entriesByDate, dates, dates[currentIndex]);
+      updateNavButtons();
+    });
+    prevBtn.addEventListener('click', () => { if (currentIndex < dates.length - 1) selectIndex(currentIndex + 1); });
+    nextBtn.addEventListener('click', () => { if (currentIndex > 0) selectIndex(currentIndex - 1); });
+
+    selectIndex(0);
+  }
+
+  init();
+</script>
+</body>
+</html>
