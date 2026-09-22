@@ -1,0 +1,37 @@
+[
+  {
+    "icon_name": "Beyoncé",
+    "category": "red carpet",
+    "reason": "Apareceu em Londres em evento da Cécred usando um look da coleção Spring 2027 de Harris Reed, com corset esculpido de decote profundo e saia semitransparente que viralizou nas redes.",
+    "source_url": "https://www.thefashionspot.com/fashion-news/972992-beyonce-plunging-corset-top-harris-reed-cecred-event-london/",
+    "region": "Global"
+  },
+  {
+    "icon_name": "Anya Taylor-Joy",
+    "category": "red carpet",
+    "reason": "Brilhou em Veneza no evento Blue Book 2026: Hidden Garden da Tiffany & Co. com um vestido corset de alta-costura da Zuhair Murad em tom verde-menta e inspiração renascentista.",
+    "source_url": "https://wwd.com/pop-culture/celebrity-news/anya-taylor-joy-tiffany-co-zuhair-murad-dress-blue-book-1239244895/",
+    "region": "Global"
+  },
+  {
+    "icon_name": "Cynthia Erivo",
+    "category": "red carpet",
+    "reason": "Roubou a cena no tapete vermelho do Toronto International Film Festival com um vestido franjado da coleção Dior Cruise 2027, decote em V e recortes nos ombros.",
+    "source_url": "https://www.wmagazine.com/fashion/cynthia-erivo-dior-tiff-2026",
+    "region": "Global"
+  },
+  {
+    "icon_name": "Cardi B",
+    "category": "it-girl",
+    "reason": "Viralizou em aparição em Las Vegas usando um vestido azul justo da Di Petsa com recortes e alças cruzadas de joias, reforçando seu status de it-girl do momento.",
+    "source_url": "https://www.thefashionspot.com/fashion-news/973140-cardi-b-curve-hugging-gown-cutouts-video/",
+    "region": "Global"
+  },
+  {
+    "icon_name": "Paris Hilton",
+    "category": "campanha",
+    "reason": "Segue como rosto da campanha Fall-Winter 2026/Spring-Summer 2027 da Karl Lagerfeld, estrelando ao lado do novo personagem digital NOT-KARL em imagens assinadas por Matt Easton.",
+    "source_url": "https://wwd.com/fashion-news/designer-luxury/karl-lagerfeld-paris-hilton-campaign-collab-1239144135/",
+    "region": "Global"
+  }
+]
