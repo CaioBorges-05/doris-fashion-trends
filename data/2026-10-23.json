@@ -1,0 +1,44 @@
+[
+  {
+    "icon_name": "Kylie Jenner",
+    "category": "it-girl",
+    "reason": "Quase vazou de um vestido de renda Saint Laurent decotado na festa de aniversário de Kim Kardashian, em 21 de outubro, gerando repercussão imediata nas redes e na imprensa de moda.",
+    "source_url": "https://www.thefashionspot.com/fashion-news/978713-kylie-jenner-plunging-lace-dress-saint-laurent-kim-kardashian",
+    "region": "Global"
+  },
+  {
+    "icon_name": "Khloé Kardashian",
+    "category": "it-girl",
+    "reason": "Apareceu na mesma festa de aniversário de Kim Kardashian com um vestido decotado da Alaïa, transparente na parte inferior, um dos looks mais comentados da noite.",
+    "source_url": "https://www.thefashionspot.com/fashion-news/978964-khloe-kardashian-plunging-see-through-dress-alaia-kim-birthday",
+    "region": "Global"
+  },
+  {
+    "icon_name": "Sydney Sweeney",
+    "category": "campanha",
+    "reason": "Estrelou a campanha da SYRN usando um cardigã curto desabotoado, antecipando a coleção SYRN Holiday Special que chega em 27 de outubro.",
+    "source_url": "https://www.thefashionspot.com/fashion-news/978919-sydney-sweeney-tiny-unbuttoned-cardigan-bra-curves-syrn",
+    "region": "Global"
+  },
+  {
+    "icon_name": "Céline Dion",
+    "category": "red carpet",
+    "reason": "Foi eleita o melhor look da semana ao usar Chanel Haute Couture sob medida durante sua residência em Paris em 2026, segundo o ranking semanal do Red Carpet Fashion Awards.",
+    "source_url": "https://www.redcarpet-fashionawards.com/2026/10/21/best-dressed-of-the-week-233/",
+    "region": "Global"
+  },
+  {
+    "icon_name": "Jenna Ortega",
+    "category": "red carpet",
+    "reason": "Brilhou com um vestido justo e brilhante, com decote profundo e fenda, na première de 'Klara and the Sun' em Nova York, em 19 de outubro.",
+    "source_url": "https://theblast.com/872712/jenna-ortega-klara-sun-premiere/",
+    "region": "Global"
+  },
+  {
+    "icon_name": "Megan Thee Stallion",
+    "category": "red carpet",
+    "reason": "Usou um vestido sob medida transparente e brilhante do Walter Mendez Atelier, com cauda de plumas rosa, no 'pink carpet' do desfile da Victoria's Secret em 18 de outubro, além de cantar na passarela usando asas de anjo.",
+    "source_url": "https://hot1009.com/4490989/megan-thee-stallion-victoria-secrets-shpw/",
+    "region": "Global"
+  }
+]
